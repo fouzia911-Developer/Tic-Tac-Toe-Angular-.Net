@@ -1,0 +1,61 @@
+<div class="app-shell">
+  <header>
+    <h1>Tic Tac Toe</h1>
+    <p class="subtitle">Angular + .NET Web API</p>
+  </header>
+
+  <section class="mode-select">
+    <label>
+      <input
+        type="radio"
+        name="mode"
+        value="TwoPlayer"
+        [ngModel]="selectedMode"
+        (ngModelChange)="onModeChange($event)"
+      />
+      Two Player Mode
+    </label>
+    <label>
+      <input
+        type="radio"
+        name="mode"
+        value="VsComputer"
+        [ngModel]="selectedMode"
+        (ngModelChange)="onModeChange($event)"
+      />
+      Play Against Computer
+    </label>
+  </section>
+
+  <p class="error" *ngIf="errorMessage">{{ errorMessage }}</p>
+
+  <ng-container *ngIf="game">
+    <div class="status" [class.won]="game.status === 'Won'" [class.draw]="game.status === 'Draw'">
+      {{ statusMessage }}
+    </div>
+
+    <div class="main-layout">
+      <app-board
+        [board]="game.board"
+        [winningCells]="game.winningCells"
+        [disabled]="isGameOver"
+        (cellClicked)="onCellClick($event)"
+      ></app-board>
+
+      <div class="side-panels">
+        <app-scoreboard
+          [scoreboard]="game.scoreboard"
+          (resetScoreboard)="onResetScoreboard()"
+        ></app-scoreboard>
+        <app-move-history [moves]="game.moveHistory"></app-move-history>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button type="button" class="btn btn-primary" (click)="onResetGame()">Reset Game</button>
+      <button type="button" class="btn btn-secondary" [disabled]="!game.canUndo" (click)="onUndo()">
+        Undo Last Move
+      </button>
+    </div>
+  </ng-container>
+</div>

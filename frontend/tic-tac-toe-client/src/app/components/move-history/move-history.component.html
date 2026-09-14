@@ -1,0 +1,22 @@
+<div class="panel">
+  <h3>Move History</h3>
+  <table *ngIf="moves.length; else empty">
+    <thead>
+      <tr>
+        <th>Move</th>
+        <th>Player</th>
+        <th>Position</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let move of moves">
+        <td>{{ move.moveNumber }}</td>
+        <td>{{ move.player }}</td>
+        <td>Row {{ move.row }}, Column {{ move.column }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <ng-template #empty>
+    <p class="empty">No moves yet.</p>
+  </ng-template>
+</div>
